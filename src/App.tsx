@@ -1,13 +1,13 @@
 import React from 'react';
 import { TI_APP_ROOT } from '@lib/utils/testId';
-import Home from '@pages/Home';
 import { MantineProvider } from '@mantine/core';
+import Layout from '@layout/Layout';
 
 function App () {
   return (
     <div data-testid={TI_APP_ROOT}>
       <MantineProvider withGlobalStyles withNormalizeCSS >
-        <Home />
+        <Layout />
       </MantineProvider>
     </div>
   );

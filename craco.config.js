@@ -8,6 +8,7 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, 'src/'),
       '@pages': path.resolve(__dirname, 'src/pages'),
+      '@layout': path.resolve(__dirname, 'src/layout'),
       '@lib': path.resolve(__dirname, 'src/lib'),
     },
   },
@@ -17,6 +18,7 @@ module.exports = {
         ...pathsToModuleNameMapper({
           '@/*': [ 'src/*' ],
           '@pages/*': [ 'src/pages/*' ],
+          '@layout/*': [ 'src/layout/*' ],
           '@lib/*': [ 'src/lib/*' ],
         }, {
           prefix: '<rootDir>/',

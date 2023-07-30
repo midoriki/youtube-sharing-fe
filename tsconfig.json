@@ -24,6 +24,7 @@
     "paths": {
       "@/*": ["/*"],
       "@pages/*": ["pages/*"],
+      "@layout/*": ["layout/*"],
       "@lib/*": ["lib/*"]
     }
   },
