@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@mantine/core": "^6.0.17",
+    "@mantine/hooks": "^6.0.17",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.11.48",
     "@types/react": "^18.0.17",

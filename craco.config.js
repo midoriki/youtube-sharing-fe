@@ -7,6 +7,8 @@ module.exports = {
   webpack: {
     alias: {
       '@': path.resolve(__dirname, 'src/'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
+      '@lib': path.resolve(__dirname, 'src/lib'),
     },
   },
   jest: {
@@ -14,6 +16,8 @@ module.exports = {
       moduleNameMapper: {
         ...pathsToModuleNameMapper({
           '@/*': [ 'src/*' ],
+          '@pages/*': [ 'src/pages/*' ],
+          '@lib/*': [ 'src/lib/*' ],
         }, {
           prefix: '<rootDir>/',
         }),

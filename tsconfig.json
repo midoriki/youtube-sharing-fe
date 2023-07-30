@@ -22,7 +22,9 @@
     "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["/*"]
+      "@/*": ["/*"],
+      "@pages/*": ["pages/*"],
+      "@lib/*": ["lib/*"]
     }
   },
   "include": [

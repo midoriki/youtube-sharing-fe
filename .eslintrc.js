@@ -38,6 +38,7 @@ module.exports = {
     'multiline-ternary': 'off',
     'object-shorthand': 'off',
     'curly': [ 'warn', 'multi-line' ],
+    'indent': [ 'warn', 2 ],
     '@typescript-eslint/no-explicit-any': 'off',
     'react/jsx-wrap-multilines': [ 'warn', {
       'declaration': 'parens-new-line',
