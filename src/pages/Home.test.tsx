@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import Home from '@pages/Home';
-import { TI_HOME_PAGE } from '@lib/utils/testId';
+import { TIPages } from '@lib/test/testId';
 
 describe('Home page', () => {
   it('should render', () => {
     render(<Home />);
-    expect(screen.getByTestId(TI_HOME_PAGE)).toBeInTheDocument();
+    expect(screen.getByTestId(TIPages.home.default)).toBeInTheDocument();
   });
 });

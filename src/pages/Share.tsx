@@ -1,9 +1,9 @@
 import { Container, Title } from '@mantine/core';
-import { TI_SHARE_PAGE } from '@lib/utils/testId';
+import { TIPages } from '@lib/test/testId';
 
 export default function Share () {
   return (
-    <Container data-testid={TI_SHARE_PAGE}>
+    <Container data-testid={TIPages.share.default}>
       <Title>Share a video</Title>
     </Container>
   );
