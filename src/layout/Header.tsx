@@ -7,13 +7,13 @@ const LinkWrapper = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.teal[7]};
   font-weight: bold;
-  font-size: 30px;
 `;
 export default function Header () {
   return (
     <MantineHeader height={60}>
       <Group sx={{ height: '100%' }} px={20} position="apart">
-        <LinkWrapper to={'/'}>Funny Youtube Videos</LinkWrapper>
+        <LinkWrapper to={'/'} style={{ fontSize: '30px' }}>Funny Youtube Videos</LinkWrapper>
+        <LinkWrapper to="/share">Share a video</LinkWrapper>
       </Group>
     </MantineHeader>
   );

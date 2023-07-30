@@ -20,6 +20,15 @@ export const TIComponents = {
     upvoteBtn: 'component-video-card-upvote-btn',
     downvoteBtn: 'component-video-card-downvote-btn',
   },
+  pages: {
+    share: {
+      shareForm: {
+        default: 'component-share-form-default',
+        urlInput: 'component-share-form-url-input',
+        submitBtn: 'component-share-form-submit-btn',
+      },
+    },
+  },
 };
 const TestId = {
   TIRoot,
