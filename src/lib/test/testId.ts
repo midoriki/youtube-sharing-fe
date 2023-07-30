@@ -5,6 +5,9 @@ export const TILayout = {
   loginLink: {
     default: 'layout-login-link',
   },
+  registerLink: {
+    default: 'layout-register-link',
+  },
 };
 export const TIPages = {
   home: {
@@ -40,6 +43,13 @@ export const TIComponents = {
       emailInput: 'component-auth-login-email-input',
       passwordInput: 'component-auth-login-password-input',
       submitBnt: 'component-auth-login-submit-btn',
+    },
+    register: {
+      default: 'component-auth-register',
+      emailInput: 'component-auth-register-email-input',
+      passwordInput: 'component-auth-register-password-input',
+      passwordConfirmationInput: 'component-auth-register-password-confirmation-input',
+      submitBnt: 'component-auth-register-submit-btn',
     },
   },
 };

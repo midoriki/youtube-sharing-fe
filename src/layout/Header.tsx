@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import LoginLink from '@layout/LoginLink';
+import RegisterLink from '@layout/RegisterLink';
 
 const LinkWrapper = styled(Link)`
   text-decoration: none;
@@ -17,6 +18,7 @@ export default function Header () {
         <Flex direction="row" gap="md">
           <LinkWrapper to="/share">Share a video</LinkWrapper>
           <LoginLink />
+          <RegisterLink />
         </Flex>
       </Group>
     </MantineHeader>
