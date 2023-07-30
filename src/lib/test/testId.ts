@@ -1,6 +1,11 @@
 export const TIRoot = {
   default: 'root-app',
 };
+export const TILayout = {
+  loginLink: {
+    default: 'layout-login-link',
+  },
+};
 export const TIPages = {
   home: {
     default: 'page-home',
@@ -29,10 +34,19 @@ export const TIComponents = {
       },
     },
   },
+  auth: {
+    login: {
+      default: 'component-auth-login',
+      emailInput: 'component-auth-login-email-input',
+      passwordInput: 'component-auth-login-password-input',
+      submitBnt: 'component-auth-login-submit-btn',
+    },
+  },
 };
 const TestId = {
   TIRoot,
   TIPages,
   TIComponents,
+  TILayout,
 };
 export default TestId;

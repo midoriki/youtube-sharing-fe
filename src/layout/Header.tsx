@@ -1,7 +1,8 @@
-import { Group, Header as MantineHeader } from '@mantine/core';
+import { Flex, Group, Header as MantineHeader } from '@mantine/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
+import LoginLink from '@layout/LoginLink';
 
 const LinkWrapper = styled(Link)`
   text-decoration: none;
@@ -13,7 +14,10 @@ export default function Header () {
     <MantineHeader height={60}>
       <Group sx={{ height: '100%' }} px={20} position="apart">
         <LinkWrapper to={'/'} style={{ fontSize: '30px' }}>Funny Youtube Videos</LinkWrapper>
-        <LinkWrapper to="/share">Share a video</LinkWrapper>
+        <Flex direction="row" gap="md">
+          <LinkWrapper to="/share">Share a video</LinkWrapper>
+          <LoginLink />
+        </Flex>
       </Group>
     </MantineHeader>
   );
