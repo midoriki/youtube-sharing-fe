@@ -1,0 +1,58 @@
+{
+  "name": "youtube-sharing-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.11.48",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router": "^6.4.3",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@types/react-router": "^5.1.19",
+    "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.48.1",
+    "eslint": "^8.31.0",
+    "eslint-plugin-react": "^7.32.0",
+    "react-router-dom": "^6.4.3",
+    "react-scripts": "^5.0.1",
+    "ts-jest": "^29.0.3",
+    "typescript": "^4.7.4"
+  },
+  "scripts": {
+    "start": "export PORT=8080 && craco start",
+    "build": "REACT_APP_ENV=production && craco build",
+    "test": "craco test",
+    "test:coverage": "craco test --coverage .",
+    "eject": "react-scripts eject",
+    "lint": "eslint src/",
+    "lint:fix": "eslint --fix src/"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
