@@ -16,9 +16,9 @@ export default function LoginLink () {
         console.log('user', user);
       }
     } catch (e: any) {
-      if (e?.data?.message) {
+      if (e?.response?.data?.message) {
         notifications.show({
-          message: e?.data?.message,
+          message: e?.response?.data?.message,
           color: 'red',
         });
       }
