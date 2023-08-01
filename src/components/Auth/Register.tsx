@@ -8,25 +8,32 @@ const TIRegister = TIComponents.auth.register;
 const schema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
+    .required()
     .messages({
+      'any.required': 'Email is required',
       'string.email': 'Email is invalid',
       'string.empty': 'Email can not be empty',
     }),
-  password: Joi.string().min(6).messages({
+  password: Joi.string().min(6).required().messages({
+    'any.required': 'Password is required',
     'string.min': 'Password is too short',
     'string.empty': 'Password can not be empty',
   }),
-  passwordConfirmation: Joi.any().valid(Joi.ref('password')).required().messages({
-    'any.only': 'Repeat password does not match',
-  }),
+  passwordConfirmation: Joi.any()
+    .valid(Joi.ref('password'))
+    .required()
+    .messages({
+      'any.required': 'Repeat password is required',
+      'any.only': 'Repeat password does not match',
+    }),
 });
 
 interface RegisterProps {
   onSubmit: (params: {
-    email: string,
-    password: string,
-    passwordConfirmation: string
-  }) => void
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+  }) => void;
 }
 
 export default function Register ({ onSubmit }: RegisterProps) {
@@ -39,9 +46,9 @@ export default function Register ({ onSubmit }: RegisterProps) {
     validate: joiResolver(schema),
   });
   function handleSubmit (values: {
-    email: string,
-    password: string,
-    passwordConfirmation: string
+    email: string;
+    password: string;
+    passwordConfirmation: string;
   }) {
     onSubmit(values);
   }
@@ -69,7 +76,9 @@ export default function Register ({ onSubmit }: RegisterProps) {
           {...form.getInputProps('passwordConfirmation')}
         />
         <Group position="center" mt="xl">
-          <Button type="submit" data-testid={TIRegister.submitBnt}>Submit</Button>
+          <Button type="submit" data-testid={TIRegister.submitBnt}>
+            Submit
+          </Button>
         </Group>
       </form>
     </Box>
