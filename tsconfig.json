@@ -22,12 +22,27 @@
     "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["/*"],
-      "@pages/*": ["pages/*"],
-      "@layout/*": ["layout/*"],
-      "@lib/*": ["lib/*"],
-      "@components/*": ["components/*"],
-      "@interfaces/*": ["interfaces/*"]
+      "@/*": [
+        "/*"
+      ],
+      "@pages/*": [
+        "pages/*"
+      ],
+      "@layout/*": [
+        "layout/*"
+      ],
+      "@lib/*": [
+        "lib/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@interfaces/*": [
+        "interfaces/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ]
     }
   },
   "include": [

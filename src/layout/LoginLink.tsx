@@ -1,13 +1,28 @@
 import Login from '@components/Auth/Login';
 import { Popover, Text } from '@mantine/core';
-import React from 'react';
 import { TILayout } from '@lib/test/testId';
+import api, { Api } from '@lib/api';
+import { notifications } from '@mantine/notifications';
 
 const TILoginLink = TILayout.loginLink;
 
 export default function LoginLink () {
-  function handleLogin (params: {email: string, password: string}) {
-    alert(JSON.stringify(params));
+  async function handleLogin (params: {email: string, password: string}) {
+    try {
+      const { data } = await api.post('/auth/login', params);
+      if (data.token) {
+        Api.token = data.token;
+        const { data: { user } } = await api.get('/profile');
+        console.log('user', user);
+      }
+    } catch (e: any) {
+      if (e?.data?.message) {
+        notifications.show({
+          message: e?.data?.message,
+          color: 'red',
+        });
+      }
+    }
   }
   return (
     <Popover

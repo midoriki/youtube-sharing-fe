@@ -12,6 +12,7 @@ module.exports = {
       '@lib': path.resolve(__dirname, 'src/lib'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@interfaces': path.resolve(__dirname, 'src/interfaces'),
+      '@config': path.resolve(__dirname, 'src/config'),
     },
   },
   jest: {
@@ -24,6 +25,7 @@ module.exports = {
           '@lib/*': [ 'src/lib/*' ],
           '@components/*': [ 'src/components/*' ],
           '@interfaces/*': [ 'src/interfaces/*' ],
+          '@config/*': [ 'src/config/*' ],
         }, {
           prefix: '<rootDir>/',
         }),
