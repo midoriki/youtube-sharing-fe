@@ -48,5 +48,7 @@ module.exports = {
       'condition': 'parens-new-line',
       'logical': 'parens-new-line',
     } ],
+    'testing-library/no-unnecessary-act': 'off',
+    'testing-library/no-node-access': 'off',
   },
 };

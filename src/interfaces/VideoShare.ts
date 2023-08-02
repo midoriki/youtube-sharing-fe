@@ -3,8 +3,9 @@ export enum Vote {
   DOWN = 'down'
 }
 
-export default interface VideoShare {
+interface VideoShare {
   id: string;
+  videoId: string;
   title: string;
   description: string;
   url: string;
@@ -13,3 +14,5 @@ export default interface VideoShare {
   downvote: number;
   voted: Vote | null;
 }
+
+export default VideoShare;

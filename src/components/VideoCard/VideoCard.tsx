@@ -1,11 +1,11 @@
-import { ActionIcon, Box, Flex, Paper, Text, Title } from '@mantine/core';
+import { ActionIcon, Flex, Paper, Text, Title } from '@mantine/core';
 import VideoShare, { Vote } from '@interfaces/VideoShare';
 import YouTube from 'react-youtube';
-import { extractVideoIdFromURL } from '@lib/utils/youtube';
 import { IconThumbDown, IconThumbUp } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { TIComponents } from '@lib/test/testId';
+import { processFormattedText } from '@lib/utils/text';
 
 const TIVideoCard = TIComponents.videoCard;
 
@@ -14,7 +14,6 @@ interface VideoCardProps {
   onVote: (id: string, vote: Vote) => void;
 }
 export default function VideoCard ({ videoShare, onVote }: VideoCardProps) {
-  const videoId = extractVideoIdFromURL(videoShare.url);
   const [ descriptionClamp, setDescriptionClamp ] = useState(true);
   const [ titleClamp, setTitleClamp ] = useState(true);
 
@@ -27,7 +26,7 @@ export default function VideoCard ({ videoShare, onVote }: VideoCardProps) {
   return (
     <Paper shadow="lg" p="lg" data-testid={TIVideoCard.default}>
       <Flex gap="40px" direction={matches ? 'column' : 'row'}>
-        <YouTube opts={{ height: 300, width: matches ? '100%' : 400 }} videoId={videoId} />
+        <YouTube opts={{ height: 300, width: matches ? '100%' : 400 }} videoId={videoShare.videoId} />
         <Flex gap="xs" direction="column" miw={0} sx={{ overflow: 'hidden' }}>
           <Title
             lineClamp={titleClamp ? 4 : 0}
@@ -66,8 +65,9 @@ export default function VideoCard ({ videoShare, onVote }: VideoCardProps) {
               lineClamp={descriptionClamp ? 4 : 0}
               onClick={() => setDescriptionClamp(!descriptionClamp)}
               data-testid={TIVideoCard.description}
+              dangerouslySetInnerHTML={{ __html: processFormattedText(videoShare.description) }}
             >
-              {videoShare.description}
+              {}
             </Text>
           </Flex>
         </Flex>

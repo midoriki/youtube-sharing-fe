@@ -17,6 +17,9 @@ export const TILayout = {
 export const TIPages = {
   home: {
     default: 'page-home',
+    perPageSelector: 'page-home-per-page-selector',
+    pagination: 'page-home-pagination',
+    empty: 'page-home-empty',
   },
   share: {
     default: 'page-share',

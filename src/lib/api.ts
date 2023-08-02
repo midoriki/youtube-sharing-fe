@@ -2,6 +2,7 @@ import { API_BASE_URL } from '@config/config';
 import User from '@interfaces/User';
 import axios, { AxiosRequestConfig } from 'axios';
 import { clearToken, retrieveToken, storeToken } from './auth/storage';
+import VideoShare from '@interfaces/VideoShare';
 
 export class Api {
   static token: string | null = retrieveToken();
@@ -68,4 +69,10 @@ export async function getProfile (): Promise<User | null> {
 
 export function shareVideo (url: string) {
   return api.post<{ success: boolean, message: string }>('/videoShare', { url });
+}
+
+export function getAllVideoShares (params: {page: number, perPage: number}) {
+  return api.get<{ success: boolean, data: VideoShare[], totalPage: number }>('/videoShare', {
+    params,
+  });
 }

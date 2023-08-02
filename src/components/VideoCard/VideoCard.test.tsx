@@ -6,6 +6,7 @@ import {
   TIComponents,
 } from '@lib/test/testId';
 import { Vote } from '@interfaces/VideoShare';
+import { processFormattedText } from '@lib/utils/text';
 
 const TIVideoCard = TIComponents.videoCard;
 
@@ -20,7 +21,9 @@ describe('VideoCard', () => {
     expect(screen.getByTestId(TIVideoCard.author).textContent).toBe(mockVideoShare.author);
     expect(screen.getByTestId(TIVideoCard.upvote).textContent).toBe(mockVideoShare.upvote.toString());
     expect(screen.getByTestId(TIVideoCard.downvote).textContent).toBe(mockVideoShare.downvote.toString());
-    expect(screen.getByTestId(TIVideoCard.description).textContent).toBe(mockVideoShare.description);
+    expect(screen.getByTestId(TIVideoCard.description).textContent).toContain(
+      mockVideoShare.description,
+    );
 
     await user.click(screen.getByTestId(TIVideoCard.upvoteBtn));
     expect(mockHandler).toHaveBeenCalledWith(mockVideoShare.id, Vote.UP);
