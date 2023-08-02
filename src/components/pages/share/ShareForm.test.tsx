@@ -27,5 +27,6 @@ describe('pages/Share/ShareForm', () => {
     await act(() => user.type(screen.getByTestId(TIShareForm.urlInput), url));
     await act(() => user.click(screen.getByTestId(TIShareForm.submitBtn)));
     expect(mockHandler).toHaveBeenCalledWith(url);
+    expect((screen.getByTestId(TIShareForm.urlInput) as HTMLInputElement).value).toBe('');
   });
 });

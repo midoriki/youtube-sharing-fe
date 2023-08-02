@@ -42,7 +42,7 @@ describe('layout/LoginLink', () => {
 
     await act(() => user.type(screen.getByTestId(TILogin.emailInput), fakeEmail));
     await act(() => user.type(screen.getByTestId(TILogin.passwordInput), fakePassword));
-    await act(() => user.click(screen.getByTestId(TILogin.submitBnt)));
+    await act(() => user.click(screen.getByTestId(TILogin.submitBtn)));
 
     expect(mockLogin).toHaveBeenCalledWith({
       email: fakeEmail,
@@ -57,7 +57,7 @@ describe('layout/LoginLink', () => {
       },
     };
     mockLogin.mockRejectedValueOnce(mockError);
-    await act(() => user.click(screen.getByTestId(TILogin.submitBnt)));
+    await act(() => user.click(screen.getByTestId(TILogin.submitBtn)));
     expect(mockNotification).toHaveBeenCalledWith({
       message: 'message',
       color: 'red',

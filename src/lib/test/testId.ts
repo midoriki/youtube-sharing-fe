@@ -47,7 +47,7 @@ export const TIComponents = {
       default: 'component-auth-login',
       emailInput: 'component-auth-login-email-input',
       passwordInput: 'component-auth-login-password-input',
-      submitBnt: 'component-auth-login-submit-btn',
+      submitBtn: 'component-auth-login-submit-btn',
     },
     register: {
       default: 'component-auth-register',

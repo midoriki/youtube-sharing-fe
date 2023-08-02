@@ -20,6 +20,7 @@ export default function ShareForm ({ onSubmit }: ShareFormProps) {
   });
   function handleSubmit (values: { url: string }) {
     onSubmit(values.url);
+    form.reset();
   }
   return (
     <Paper shadow="lg" p="lg" data-testid={TIShareForm.default}>

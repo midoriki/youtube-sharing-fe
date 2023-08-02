@@ -53,7 +53,7 @@ export default function Login ({ onSubmit }: LoginProps) {
           {...form.getInputProps('password')}
         />
         <Group position="center" mt="xl">
-          <Button type="submit" data-testid={TIInput.submitBnt}>Submit</Button>
+          <Button type="submit" data-testid={TIInput.submitBtn}>Submit</Button>
         </Group>
       </form>
     </Box>

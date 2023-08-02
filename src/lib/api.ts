@@ -34,6 +34,8 @@ export class Api {
 
 const api = new Api();
 
+export default api;
+
 export async function login (data: {email: string, password: string}) {
   const response = await api.post<{token: string}>('/auth/login', data);
   if (response.data.token) {
@@ -64,4 +66,6 @@ export async function getProfile (): Promise<User | null> {
   return null;
 }
 
-export default api;
+export function shareVideo (url: string) {
+  return api.post<{ success: boolean, message: string }>('/videoShare', { url });
+}

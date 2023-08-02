@@ -15,14 +15,14 @@ describe('Login', () => {
 
     expect(screen.getByTestId(TIInput.default)).toBeInTheDocument();
 
-    await act(() => user.click(screen.getByTestId(TIInput.submitBnt)));
+    await act(() => user.click(screen.getByTestId(TIInput.submitBtn)));
 
     expect(screen.getByText('Email can not be empty')).toBeInTheDocument();
     expect(screen.getByText('Password can not be empty')).toBeInTheDocument();
 
     await act(() => user.type(screen.getByTestId(TIInput.emailInput), faker.string.alpha(5)));
     await act(() => user.type(screen.getByTestId(TIInput.passwordInput), faker.string.alpha(3)));
-    await act(() => user.click(screen.getByTestId(TIInput.submitBnt)));
+    await act(() => user.click(screen.getByTestId(TIInput.submitBtn)));
     expect(screen.getByText('Email is invalid')).toBeInTheDocument();
     expect(screen.getByText('Password is too short')).toBeInTheDocument();
 
@@ -34,7 +34,7 @@ describe('Login', () => {
     const mockPassword = faker.string.alphanumeric(7);
     await act(() => user.type(screen.getByTestId(TIInput.emailInput), mockEmail));
     await act(() => user.type(screen.getByTestId(TIInput.passwordInput), mockPassword));
-    await act(() => user.click(screen.getByTestId(TIInput.submitBnt)));
+    await act(() => user.click(screen.getByTestId(TIInput.submitBtn)));
 
     expect(mockHandler).toHaveBeenCalledWith({ email: mockEmail, password: mockPassword });
   });
