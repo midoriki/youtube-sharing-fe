@@ -42,6 +42,14 @@ export async function login (data: {email: string, password: string}) {
   }
 }
 
+export async function register (data: { email: string, password: string, passwordConfirmation: string }) {
+  const response = await api.post<{ token: string }>('/auth/register', data);
+  if (response.data.token) {
+    Api.token = response.data.token;
+    storeToken(response.data.token);
+  }
+}
+
 export async function getProfile (): Promise<User | null> {
   if (Api.token) {
     try {

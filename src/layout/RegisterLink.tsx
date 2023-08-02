@@ -1,18 +1,33 @@
 import { Popover, Text } from '@mantine/core';
-import React from 'react';
 import Register from '@components/Auth/Register';
 import { TILayout } from '@lib/test/testId';
+import { register } from '@lib/api';
+import useCheckProfile from '@lib/hooks/useCheckProfile';
+import { notifications } from '@mantine/notifications';
 
 const TLRegister = TILayout.registerLink;
 
 export default function RegisterLink () {
-  function handleRegister (params: {
+  const checkProfile = useCheckProfile();
+
+  async function handleRegister (params: {
     email: string,
     password: string,
     passwordConfirmation: string,
   }) {
-    alert(JSON.stringify(params));
+    try {
+      await register(params);
+      await checkProfile();
+    } catch (e: any) {
+      if (e?.response?.data?.message) {
+        notifications.show({
+          message: e?.response?.data?.message,
+          color: 'red',
+        });
+      }
+    }
   }
+
   return (
     <Popover
       width={300}
