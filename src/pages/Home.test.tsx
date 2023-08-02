@@ -2,13 +2,24 @@ import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '@pages/Home';
 import { TIPages, TIComponents } from '@lib/test/testId';
-import { getAllVideoShares } from '@lib/api';
+import { getAllVideoShares, vote } from '@lib/api';
 import { genMockVideoShare } from '@lib/test/factory';
+import { notifications } from '@mantine/notifications';
+import { useProfileStore } from '@lib/stores/ProfileStore';
+import { faker } from '@faker-js/faker';
 
 jest.mock('@lib/api', () => ({
   getAllVideoShares: jest.fn(),
+  vote: jest.fn(),
 }));
-
+jest.mock('@mantine/notifications', (() => ({
+  notifications: {
+    show: jest.fn(),
+  },
+})));
+jest.mock('@lib/stores/ProfileStore', () => ({
+  useProfileStore: jest.fn(),
+}));
 class ResizeObserver {
   observe () {}
   unobserve () {}
@@ -22,11 +33,17 @@ const TIVideoCard = TIComponents.videoCard;
 
 describe('Home page', () => {
   let mockGetAllVideoShare: jest.Mock;
+  let mockVote: jest.Mock;
+  let mockNotification: jest.Mock;
+  let mockUseProfileStore: jest.Mock;
 
   beforeAll(() => {
     window.ResizeObserver = ResizeObserver;
     global.scrollTo = jest.fn();
     mockGetAllVideoShare = jest.mocked(getAllVideoShares);
+    mockVote = jest.mocked(vote);
+    mockNotification = jest.mocked(notifications.show);
+    mockUseProfileStore = jest.mocked(useProfileStore);
   });
 
   beforeEach(() => {
@@ -46,6 +63,7 @@ describe('Home page', () => {
         totalPage: 0,
       },
     });
+    mockUseProfileStore.mockReturnValue({ user: null });
 
     render(<Home />);
 
@@ -67,6 +85,8 @@ describe('Home page', () => {
   it('should render with data', async () => {
     const user = userEvent.setup();
     const mockVideoShares = Array(5).fill(1).map(() => genMockVideoShare());
+    
+    mockUseProfileStore.mockReturnValue({ user: null });
 
     mockGetAllVideoShare.mockResolvedValue({
       data: {
@@ -98,10 +118,85 @@ describe('Home page', () => {
     });
 
     await act(() => user.click(screen.getByTestId(TIHome.perPageSelector)));
-    await act(() => user.click(screen.getByText('100')));
+    await act(() => user.click(screen.getAllByText('100')[0]));
     expect(mockGetAllVideoShare).toBeCalledWith({
       page: 1,
       perPage: 100,
+    });
+  });
+
+  it('should show notification when vote without logged in', async () => {
+    const user = userEvent.setup();
+    const mockVideoShares = Array(5).fill(1).map(() => genMockVideoShare());
+
+    mockUseProfileStore.mockReturnValue({ user: null });
+
+    mockGetAllVideoShare.mockResolvedValue({
+      data: {
+        success: true,
+        data: mockVideoShares,
+        totalPage: 2,
+      },
+    });
+
+    render(<Home />);
+
+    expect(screen.getAllByTestId(TIVideoCard.default).length).toBe(mockVideoShares.length);
+    await act(() => user.click(screen.getAllByTestId(TIVideoCard.upvoteBtn)[0]));
+    expect(mockNotification).toHaveBeenCalledWith({
+      message: 'Please login to give your impression',
+      color: 'blue',
+    });
+  });
+
+  it('should allow to vote when logged in', async () => {
+    const user = userEvent.setup();
+    const mockVideoShares = Array(5).fill(1).map(() => genMockVideoShare());
+
+    mockUseProfileStore.mockReturnValue({ user: {
+      id: faker.string.uuid(),
+      email: faker.internet.email(),
+    } });
+
+    mockGetAllVideoShare.mockResolvedValue({
+      data: {
+        success: true,
+        data: mockVideoShares,
+        totalPage: 2,
+      },
+    });
+
+    mockVote.mockResolvedValueOnce({
+      data: {
+        success: true,
+        message: 'success message',
+      },
+    });
+
+    render(<Home />);
+    
+    expect(screen.getAllByTestId(TIVideoCard.default).length).toBe(mockVideoShares.length);
+    await act(() => user.click(screen.getAllByTestId(TIVideoCard.upvoteBtn)[0]));
+    expect(mockVote).toHaveBeenCalledWith(expect.objectContaining({
+      type: 'up',
+    }));
+    expect(mockNotification).toHaveBeenCalledWith({
+      message: 'success message',
+      color: 'teal',
+    });
+
+    const mockError = new Error('error') as any;
+    mockError.response = {
+      data: {
+        message: 'error message',
+      },
+    };
+
+    mockVote.mockRejectedValueOnce(mockError);
+    await act(() => user.click(screen.getAllByTestId(TIVideoCard.upvoteBtn)[0]));
+    expect(mockNotification).toHaveBeenCalledWith({
+      message: 'error message',
+      color: 'red',
     });
   });
 });

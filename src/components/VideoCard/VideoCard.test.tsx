@@ -6,7 +6,6 @@ import {
   TIComponents,
 } from '@lib/test/testId';
 import { Vote } from '@interfaces/VideoShare';
-import { processFormattedText } from '@lib/utils/text';
 
 const TIVideoCard = TIComponents.videoCard;
 

@@ -2,9 +2,11 @@ import { Text, Container, Flex, Select, Center, Pagination } from '@mantine/core
 import { TIPages } from '@lib/test/testId';
 import { useVideoShareStore } from '@lib/stores/VideoShareStore';
 import { useEffect } from 'react';
-import { getAllVideoShares } from '@lib/api';
+import { getAllVideoShares, vote } from '@lib/api';
 import VideoCard from '@components/VideoCard/VideoCard';
 import { Vote } from '@interfaces/VideoShare';
+import { notifications } from '@mantine/notifications';
+import { useProfileStore } from '@lib/stores/ProfileStore';
 
 const PER_PAGE_OPTIONS = [
   { value: '5', label: '5' },
@@ -15,6 +17,7 @@ const PER_PAGE_OPTIONS = [
 ];
 
 export default function Home () {
+  const { user } = useProfileStore((state) => state);
   const { 
     videoShares, 
     setVideoShares, 
@@ -23,22 +26,52 @@ export default function Home () {
     paging,
     setPaging,
   } = useVideoShareStore((state) => state);
+
   function handlePerPageChange (value: string) {
     setPaging({ page: 1, perPage: parseInt(value) });
   }
 
-  useEffect(() => {
-    async function fetchVideoShares () {
-      const { data } = await getAllVideoShares(paging);
-      setVideoShares(data.data);
-      setTotalPage(data.totalPage);
-      window.scrollTo(0, 0);
-    }
-    fetchVideoShares();
-  }, [ paging ]);
+  async function fetchVideoShares () {
+    const { data } = await getAllVideoShares(paging);
+    setVideoShares(data.data);
+    setTotalPage(data.totalPage);
+  }
 
-  function handleVote (videoId: string, vote: Vote) {
-    console.log('vote', videoId, vote);
+  useEffect(() => {
+    (async () => {
+      await fetchVideoShares();
+      window.scrollTo(0, 0);
+    })();
+  }, [ paging, user ]);
+
+  async function handleVote (videoShareId: string, type: Vote) {
+    if (!user) {
+      notifications.show({
+        message: 'Please login to give your impression',
+        color: 'blue',
+      });
+      return;
+    }
+    try {
+      const { data } = await vote({
+        videoShareId,
+        type: type,
+      });
+      if (data.success && data.message) {
+        notifications.show({
+          message: data.message,
+          color: 'teal',
+        });
+        await fetchVideoShares();
+      }
+    } catch (e: any) {
+      if (e?.response?.data?.message) {
+        notifications.show({
+          message: e?.response?.data?.message,
+          color: 'red',
+        });
+      }
+    }
   }
 
   return (

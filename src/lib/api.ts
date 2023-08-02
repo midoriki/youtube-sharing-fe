@@ -2,7 +2,7 @@ import { API_BASE_URL } from '@config/config';
 import User from '@interfaces/User';
 import axios, { AxiosRequestConfig } from 'axios';
 import { clearToken, retrieveToken, storeToken } from './auth/storage';
-import VideoShare from '@interfaces/VideoShare';
+import VideoShare, { Vote } from '@interfaces/VideoShare';
 
 export class Api {
   static token: string | null = retrieveToken();
@@ -72,7 +72,12 @@ export function shareVideo (url: string) {
 }
 
 export function getAllVideoShares (params: {page: number, perPage: number}) {
-  return api.get<{ success: boolean, data: VideoShare[], totalPage: number }>('/videoShare', {
+  const mode = Api.token ? '' : 'all';
+  return api.get<{ success: boolean, data: VideoShare[], totalPage: number }>(`/videoShare/${mode}`, {
     params,
   });
+}
+
+export function vote (params: {videoShareId: string, type: Vote}) {
+  return api.post<{success: boolean, message: string}>('/vote', params);
 }
