@@ -1,20 +1,18 @@
 import Login from '@components/Auth/Login';
 import { Popover, Text } from '@mantine/core';
 import { TILayout } from '@lib/test/testId';
-import api, { Api } from '@lib/api';
+import { login } from '@lib/api';
 import { notifications } from '@mantine/notifications';
+import useCheckProfile from '@lib/hooks/useCheckProfile';
 
 const TILoginLink = TILayout.loginLink;
 
 export default function LoginLink () {
+  const checkProfile = useCheckProfile();
   async function handleLogin (params: {email: string, password: string}) {
     try {
-      const { data } = await api.post('/auth/login', params);
-      if (data.token) {
-        Api.token = data.token;
-        const { data: { user } } = await api.get('/profile');
-        console.log('user', user);
-      }
+      await login(params);
+      await checkProfile();
     } catch (e: any) {
       if (e?.response?.data?.message) {
         notifications.show({

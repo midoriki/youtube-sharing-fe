@@ -8,6 +8,11 @@ export const TILayout = {
   registerLink: {
     default: 'layout-register-link',
   },
+  avatar: {
+    default: 'layout-avatar',
+    email: 'layout-avatar-email',
+    logout: 'layout-avatar-logout',
+  },
 };
 export const TIPages = {
   home: {
