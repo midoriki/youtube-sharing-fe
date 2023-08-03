@@ -1,11 +1,11 @@
-import { ActionIcon, Flex, Paper, Text, Title } from '@mantine/core';
+import { ActionIcon, Box, Flex, Paper, Text, Title } from '@mantine/core';
 import VideoShare, { Vote } from '@interfaces/VideoShare';
-import YouTube from 'react-youtube';
 import { IconThumbDown, IconThumbUp } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useMediaQuery } from '@mantine/hooks';
 import { TIComponents } from '@lib/test/testId';
 import { processFormattedText } from '@lib/utils/text';
+import Player from 'react-player/youtube';
 
 const TIVideoCard = TIComponents.videoCard;
 
@@ -26,7 +26,9 @@ export default function VideoCard ({ videoShare, onVote }: VideoCardProps) {
   return (
     <Paper shadow="lg" p="lg" data-testid={TIVideoCard.default}>
       <Flex gap="40px" direction={matches ? 'column' : 'row'}>
-        <YouTube opts={{ height: 300, width: matches ? '100%' : 400 }} videoId={videoShare.videoId} />
+        <Box>
+          <Player style={{ maxWidth: matches ? '100%' : '500px' }} url={videoShare.url} />
+        </Box>
         <Flex gap="xs" direction="column" miw={0} sx={{ overflow: 'hidden' }}>
           <Title
             lineClamp={titleClamp ? 4 : 0}
