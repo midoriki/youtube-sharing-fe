@@ -6,6 +6,9 @@ describe('utils youtube', () => {
     let url = `https://www.youtube.com/watch?v=${id}`;
     expect(extractVideoIdFromURL(url)).toBe(id);
 
+    url = `https://www.youtube.com/watch?v=${id}?t=250`;
+    expect(extractVideoIdFromURL(url)).toBe(id);
+
     url = `https://youtu.be/${id}?t=250`;
     expect(extractVideoIdFromURL(url)).toBe(id);
 
