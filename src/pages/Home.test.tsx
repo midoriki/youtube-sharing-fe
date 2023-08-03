@@ -123,6 +123,12 @@ describe('Home page', () => {
       page: 1,
       perPage: 100,
     });
+
+    await act(() => user.click(screen.getByTestId(TIHome.refresh)));
+    expect(mockGetAllVideoShare).toHaveBeenCalledWith({
+      page: 1,
+      perPage: 100,
+    });
   });
 
   it('should show notification when vote without logged in', async () => {

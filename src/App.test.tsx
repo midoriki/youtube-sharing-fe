@@ -7,6 +7,7 @@ import useCheckProfile from '@lib/hooks/useCheckProfile';
 jest.mock('@pages/Home');
 jest.mock('@lib/api');
 jest.mock('@lib/hooks/useCheckProfile');
+jest.mock('socket.io-client');
 
 describe('App', () => {
   it('should render', () => {

@@ -1,12 +1,13 @@
-import { Text, Container, Flex, Select, Center, Pagination } from '@mantine/core';
+import { Loader, Text, Container, Flex, Select, Center, Pagination, ActionIcon } from '@mantine/core';
 import { TIPages } from '@lib/test/testId';
 import { useVideoShareStore } from '@lib/stores/VideoShareStore';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllVideoShares, vote } from '@lib/api';
 import VideoCard from '@components/VideoCard/VideoCard';
 import { Vote } from '@interfaces/VideoShare';
 import { notifications } from '@mantine/notifications';
 import { useProfileStore } from '@lib/stores/ProfileStore';
+import { IconRefresh } from '@tabler/icons-react';
 
 const PER_PAGE_OPTIONS = [
   { value: '5', label: '5' },
@@ -27,14 +28,26 @@ export default function Home () {
     setPaging,
   } = useVideoShareStore((state) => state);
 
+  const [ isLoading, setIsLoading ] = useState(false);
+
   function handlePerPageChange (value: string) {
     setPaging({ page: 1, perPage: parseInt(value) });
   }
 
   async function fetchVideoShares () {
-    const { data } = await getAllVideoShares(paging);
-    setVideoShares(data.data);
-    setTotalPage(data.totalPage);
+    try {
+      setIsLoading(true);
+      const { data } = await getAllVideoShares(paging);
+      setVideoShares(data.data);
+      setTotalPage(data.totalPage);
+    } catch (e) {
+      notifications.show({
+        message: 'Failed to get new videos',
+        color: 'red',
+      });
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -77,7 +90,10 @@ export default function Home () {
   return (
     <Container data-testid={TIPages.home.default}>
       <Flex direction="column" gap="xl">
-        <Flex justify="flex-end">
+        <Flex justify="space-between" align="center">
+          <ActionIcon color='teal.7' onClick={fetchVideoShares}>
+            { isLoading ? <Loader /> : <IconRefresh data-testid={TIPages.home.refresh} /> }
+          </ActionIcon>
           { videoShares.length > 0 ? (
             <Select 
               value={paging.perPage.toString()} 

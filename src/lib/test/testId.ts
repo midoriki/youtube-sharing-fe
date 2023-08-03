@@ -26,6 +26,7 @@ export const TIPages = {
     perPageSelector: 'page-home-per-page-selector',
     pagination: 'page-home-pagination',
     empty: 'page-home-empty',
+    refresh: 'page-home-refresh',
   },
   share: {
     default: 'page-share',
