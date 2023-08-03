@@ -3,7 +3,6 @@ import Share from '@pages/Share';
 import { TIPages, TIComponents } from '@lib/test/testId';
 import userEvent from '@testing-library/user-event';
 import { shareVideo } from '@lib/api';
-import { faker } from '@faker-js/faker';
 import { notifications } from '@mantine/notifications';
 import { act } from 'react-dom/test-utils';
 import { AxiosResponse } from 'axios';
