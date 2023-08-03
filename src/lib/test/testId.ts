@@ -2,6 +2,12 @@ export const TIRoot = {
   default: 'root-app',
 };
 export const TILayout = {
+  header: {
+    'default': 'layout-header-default',
+    'homeIcon': 'layout-header-home-icon',
+    'title': 'layout-header-title',
+    'share': 'layout-header-share',
+  },
   loginLink: {
     default: 'layout-login-link',
   },
