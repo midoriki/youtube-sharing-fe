@@ -18,7 +18,7 @@ export function useSocket () {
     socket.current?.on('new-video-share', (data: { author: string, title: string }) => {
       if (user && user.email !== data.author) {
         notifications.show({
-          title: 'An user has shared a new video',
+          title: `User ${data.author} has shared a new video`,
           message: data.title,
         });
       }
