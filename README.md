@@ -50,11 +50,47 @@ Components should have `data-testid` for easier query.
 
 Mock data should be created with [fakerjs](https://fakerjs.dev/guide/) to ensure component can work with different value of data.
 
+To run tests
+
+`npm run test`
+
+To run tests and generate coverage report
+
+`npm run test:coverage`
+
+Run a specific test file
+
+`npm run test -- Home.test.tsx`
+
 ### Libraries
+
+#### Style and component
 
 This project heavily make use of [Mantine](https://mantine.dev/pages/getting-started/) for styles and components.
 
+#### Routing
+
 Routing is done with the help of [ReactRouter](https://reactrouter.com/en/main).
+
+#### State management
+
+[Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction) is a minimalistic state management library
+
+#### HTTP request
+
+[Axios](https://axios-http.com/) is using for making API calls
+
+## Deployment
+
+Run build command to generate a static built of the app to `build` directory
+
+`npm run build`
+
+Then you can serve the app with `serve` or `nginx`
+
+`npx serve -s build`
+
+Remember to supply the app with its [backend](https://github.com/midoriki/youtube-sharing-be))
 
 ## Scripts
 
