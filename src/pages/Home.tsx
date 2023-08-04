@@ -37,7 +37,7 @@ export default function Home () {
   async function fetchVideoShares () {
     try {
       setIsLoading(true);
-      const { data } = await getAllVideoShares(paging);
+      const { data } = await getAllVideoShares(paging, user ? '' : 'all');
       setVideoShares(data.data);
       setTotalPage(data.totalPage);
     } catch (e) {

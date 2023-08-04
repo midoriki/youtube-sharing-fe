@@ -67,6 +67,8 @@ describe('Home page', () => {
 
     render(<Home />);
 
+    await screen.findByTestId(TIHome.refresh);
+
     expect(screen.getByTestId(TIHome.default)).toBeInTheDocument();
     expect(screen.queryByTestId(TIHome.perPageSelector)).not.toBeInTheDocument();
     expect(screen.queryByTestId(TIHome.pagination)).not.toBeInTheDocument();
@@ -78,13 +80,13 @@ describe('Home page', () => {
     expect(mockGetAllVideoShare).toHaveBeenCalledWith({
       page: 1,
       perPage: 5,
-    });
+    }, 'all');
     expect(screen.getByTestId(TIHome.empty)).toBeInTheDocument();
   });
 
   it('should render with data', async () => {
     const user = userEvent.setup();
-    const mockVideoShares = Array(5).fill(1).map(() => genMockVideoShare());
+    const mockVideoShares = Array(10).fill(1).map(() => genMockVideoShare());
     
     mockUseProfileStore.mockReturnValue({ user: null });
 
@@ -98,37 +100,47 @@ describe('Home page', () => {
 
     render(<Home />);
 
+    await screen.findByTestId(TIHome.refresh);
+
+    expect(mockGetAllVideoShare).toHaveBeenLastCalledWith({
+      page: 1,
+      perPage: 5,
+    }, 'all');
+
     expect(screen.getByTestId(TIHome.default)).toBeInTheDocument();
-    expect(screen.queryByTestId(TIHome.perPageSelector)).not.toBeInTheDocument();
-    expect(screen.queryByTestId(TIHome.pagination)).not.toBeInTheDocument();
+    expect(screen.getByTestId(TIHome.perPageSelector)).toBeInTheDocument();
+    expect(screen.getByTestId(TIHome.pagination)).toBeInTheDocument();
 
     await screen.findByTestId(TIHome.pagination);
     await screen.findByTestId(TIHome.perPageSelector);
 
-    expect(mockGetAllVideoShare).toHaveBeenCalledWith({
-      page: 1,
-      perPage: 5,
-    });
+
     expect(screen.getAllByTestId(TIVideoCard.default).length).toBe(mockVideoShares.length);
 
     await act(() => user.click(screen.getByTestId(TIHome.pagination).lastChild as HTMLButtonElement));
-    expect(mockGetAllVideoShare).toBeCalledWith({
+
+    await screen.findByTestId(TIHome.refresh);
+    
+    expect(mockGetAllVideoShare).toHaveBeenLastCalledWith({
       page: 2,
       perPage: 5,
-    });
+    }, 'all');
 
     await act(() => user.click(screen.getByTestId(TIHome.perPageSelector)));
     await act(() => user.click(screen.getAllByText('100')[0]));
-    expect(mockGetAllVideoShare).toBeCalledWith({
+
+    await screen.findByTestId(TIHome.refresh);
+    
+    expect(mockGetAllVideoShare).toHaveBeenLastCalledWith({
       page: 1,
       perPage: 100,
-    });
+    }, 'all');
 
     await act(() => user.click(screen.getByTestId(TIHome.refresh)));
-    expect(mockGetAllVideoShare).toHaveBeenCalledWith({
+    expect(mockGetAllVideoShare).toHaveBeenLastCalledWith({
       page: 1,
       perPage: 100,
-    });
+    }, 'all');
   });
 
   it('should show notification when vote without logged in', async () => {
@@ -146,6 +158,8 @@ describe('Home page', () => {
     });
 
     render(<Home />);
+
+    await screen.findByTestId(TIHome.refresh);
 
     expect(screen.getAllByTestId(TIVideoCard.default).length).toBe(mockVideoShares.length);
     await act(() => user.click(screen.getAllByTestId(TIVideoCard.upvoteBtn)[0]));
@@ -180,6 +194,13 @@ describe('Home page', () => {
     });
 
     render(<Home />);
+
+    await screen.findByTestId(TIHome.refresh);
+
+    expect(mockGetAllVideoShare).toHaveBeenLastCalledWith({
+      page: 1,
+      perPage: 100,
+    }, '');
     
     expect(screen.getAllByTestId(TIVideoCard.default).length).toBe(mockVideoShares.length);
     await act(() => user.click(screen.getAllByTestId(TIVideoCard.upvoteBtn)[0]));

@@ -71,8 +71,7 @@ export function shareVideo (url: string) {
   return api.post<{ success: boolean, message: string }>('/videoShare', { url });
 }
 
-export function getAllVideoShares (params: {page: number, perPage: number}) {
-  const mode = Api.token ? '' : 'all';
+export function getAllVideoShares (params: {page: number, perPage: number}, mode: '' | 'all' = '') {
   return api.get<{ success: boolean, data: VideoShare[], totalPage: number }>(`/videoShare/${mode}`, {
     params,
   });
